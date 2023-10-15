@@ -11,9 +11,16 @@ import pandas as pd
 for file in os.listdir():
     os.chmod(os.path.join(os.getcwd(), file), 0o777)
 
-# 清除 tmp.txt 文件中的所有内容
-with open("tmp.txt", "w") as f:
-    pass
+#新建一个 tmp.txt 文本储存临时数据
+# 检查文件是否存在
+if not os.path.exists('tmp.txt'):
+    # 如果不存在，创建一个新文件
+    with open('tmp.txt', 'w') as f:
+        pass
+else:
+    # 如果存在，清空文件内容
+    with open('tmp.txt', 'w') as f:
+        f.truncate(0)
 
 # 获取该文件夹中 cssj.txt 文件的内容，存储到 tmp.txt 文件中
 # 使用chardet库检测cssj.txt文件的编码格式
@@ -69,3 +76,16 @@ df = df[['名次', '姓名', '成绩']]
 
 # 保存到Excel文件
 df.to_excel(filepath, index=False)
+
+#删除tmp文件
+# 检查tmp.txt文件是否存在
+if os.path.exists('tmp.txt'):
+    # 如果存在，删除文件
+    os.remove('tmp.txt')
+
+# 清空cssj.txt文件内容
+with open('cssj.txt', 'w') as f:
+    f.truncate(0)
+
+#完成输出
+print("✅ 请前往result文件夹中查看成绩单")
